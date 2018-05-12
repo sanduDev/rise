@@ -1,0 +1,16 @@
+<ion-view view-title="{{playlist.name}}" hide-tabs="false">
+    <ion-nav-title class="bold first-letter-uc">
+        <span>{{playlist.name}}</span>
+    </ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-icon ion-ios-arrow-back" ui-sref="playlists"></button>
+    </ion-nav-buttons>
+    
+    <ion-content class="padding">
+        <ion-list class="naked">
+            <ion-item ng-repeat="track in playlist.tracks_id track by $index">
+                <i class="icon ion-ios-musical-note"></i> {{track}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

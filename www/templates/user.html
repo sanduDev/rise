@@ -1,0 +1,136 @@
+<ion-view view-title="My Account">
+    <ion-nav-title class="bold first-letter-uc" on-tap="scrollTop()">
+        <span>{{user.name}}</span>
+    </ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button button-icon ion-ios-settings" ui-sref="settings"></button>
+    </ion-nav-buttons>
+
+    <ion-content class="light-bg fav" scroll="false">
+        <div class="wrap-profil">
+            <div class="profile-pic-front-container">
+                <div class="circle-cover">
+                    <img ng-src="{{picture}}" style="width: 100%;">
+                </div>
+            </div>
+            <div class="profile-pic-back-container">
+                <div class="dark-cover"></div>
+                <img src="img/rise-no-avatar-fav.png" style="width: 100%;">
+            </div>
+        </div>
+
+        <tab-slide-box tab="0">
+            <div class="tsb-icons">
+                <div class="tsb-ic-wrp">
+                    <ion-scroll has-bouncing="true" direction="none" class="tsb-hscroll margin-center" scrollbar-x="false">
+                        <a class="active">Artists</a>
+                        <a>Tracks</a>
+                    </ion-scroll>
+                </div>
+            </div>
+            <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)" has-bouncing="true">
+                <!-- Favorites Artists-->
+                <ion-slide ng-controller="FavArtistsListCtrl" >
+                    <div ng-show="loading" class="text-center">
+                        <ion-spinner icon="dots" class="spinner dots"></ion-spinner>
+                    </div>
+                    <div ng-show="favArtists == '' && !loading" class="verticaly-centered text-center" style="top: 20%;">
+                        You have no favorite artist, <a ui-sref="artists">start discovering artists around you !</a>
+                    </div>
+                    <ion-scroll class="full-height minus-fav" ng-show="favArtists.length>0">
+                        <ion-list class="list" show-delete="shouldShowDelete" can-swipe="listCanSwipe">
+                            <ion-toggle ng-model="shouldShowDelete" class="showDelete">Edit</ion-toggle>
+                            <ion-item class="list" type="item-text-wrap" ng-repeat="artist in favArtists | orderBy: 'surname' track by $index">
+                                <div ng-controller="FavArtistsAddCtrl">
+                                    <ion-delete-button class="ion-minus-circled" ng-click="removeFavoriteArtist($index, artist.user_id)"></ion-delete-button>
+                                </div>
+                                <div class="item item-avatar fav">
+                                    <a ng-href="#/artists/{{artist.user_id}}">
+                                       <div class="avatar">
+                                           <ion-spinner icon="spiral" class="verticaly-centered z-low"></ion-spinner>
+                                           <img ng-src="http://rise-discover.com/media/img/artists/{{artist.avatar_url}}" alt="{{artist.surname}}" ng-show="artist.avatar_url" img-preload class="fade">
+                                           <img src="img/rise-no-avatar.png" alt="{{artist.surname}}" ng-show="artist.avatar_url === '' || !artist.avatar_url">
+                                       </div>
+                                       <div class="data">
+                                           <h2>{{artist.surname}}</h2>
+                                           <p>{{artist.locality}}</p>
+                                       </div>
+                                   </a>
+                                    <!--<div class="actions" ng-click="$event.stopPropagation();$event.preventDefault();">
+                                        <i class="icon ion-android-more-vertical more-dots"></i>
+                                    </div>-->
+                                </div>
+                           </ion-item>
+                        </ion-list>
+                    </ion-scroll>
+                </ion-slide>
+                <!-- Favorites Tracks-->
+                <ion-slide ng-controller="FavTracksListCtrl" >
+                    <div ng-show="loading" class="text-center">
+                        <ion-spinner icon="dots" class="spinner dots"></ion-spinner>
+                    </div>
+                    <div ng-show="favTracks == ''" class="verticaly-centered text-center" style="top: 20%;">
+                        You have no favorite track, <a ui-sref="artists">start discovering artists around you !</a>
+                    </div>
+                    <ion-scroll class="full-height minus-fav" ng-show="favTracks.length > 0">
+                        <ion-list class="list" show-delete="shouldShowDelete">
+                            <ion-toggle ng-model="shouldShowDelete" class="showDelete">Edit</ion-toggle>
+                            <ion-item class="list" ng-repeat="Track in favTracks track by $index" ng-click="sc = true">
+                                <div ng-controller="FavTracksAddCtrl">
+                                    <ion-delete-button class="ion-minus-circled" ng-click="removeFavoriteTrack($index, Track.favorite_track_permalink_url);"></ion-delete-button>
+                                </div>
+                                <div plangular="{{Track.favorite_track_permalink_url}}">
+                                    <div class="search item item-avatar" ng-click="playPause($index, Track.favorite_track_src)">
+                                        <div class="avatar col relative">
+                                            <img ng-src="{{Track.favorite_track_artwork}}" class="artwork" ng-show="Track.favorite_track_artwork"/>
+                                            <img src="img/rise-60.png" class="artwork" ng-show="!Track.favorite_track_artwork"/>
+                                        </div>
+                                        <div class="data col col-70">
+                                            <div class="infos" ng-class="{'is-active': player.playing === Track.favorite_track_src}">
+                                                <p class="username">{{Track.favorite_track_artist_surname}}</p>
+                                                <p class="title">{{Track.favorite_track_title}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-center" style="position: absolute; bottom: 0; right: 13px;">
+                                            <ion-spinner icon="spiral" ng-if="player.playing === Track.favorite_track_src && currentTime === 0"></ion-spinner>
+                                            <ion-spinner icon="lines" ng-if="player.playing === Track.favorite_track_src && currentTime !== 0"></ion-spinner>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ion-item>
+                        </ion-list>
+                    </ion-scroll>
+                </ion-slide>
+            </ion-slide-box>
+        </tab-slide-box>
+    </ion-content>
+
+    <div class="more tracks" ng-click="hello = false" ng-if="hello">
+        <ion-list ng-click="$event.stopPropagation(); childActive()">
+            <ion-item class="row" ng-click="addFavorite()">
+                <div class="col col-10 icon ion-heart text-center"></div>
+                <div class="col col-95">Favorites</div>
+            </ion-item>
+            <ion-item class="row" ng-click="showPlaylists()">
+                <div class="col col-10 icon ion-plus text-center"></div>
+                <div class="col col-95">Add to playlist</div>
+            </ion-item>
+            <ion-item class="row" onclick="alert('Repost on Soundcloud')">
+                <div class="col col-10 fa fa-soundcloud text-center" aria-hidden="true"></div>
+                <div class="col col-95">Repost on Soundcloud</div>
+            </ion-item>
+            <ion-item class="row" onclick="alert('Share this song')">
+                <div class="col col-10 icon ion-share text-center"></div>
+                <div class="col col-95">Share</div>
+            </ion-item>
+        </ion-list>
+    </div>
+
+    <div ng-show="playlistsModal" class="padding modal full">
+        <i class="fa fa-close top-right" ng-click="hidePlaylists()"></i>
+        <p>Select a playlist</p>
+        <ion-list class="lateral_borders">
+            <ion-item ng-repeat="playlist in playlists" ng-click="addToPlaylist({{playlist.id}})">{{playlist.name}}, {{playlist.id}}</ion-item>
+        </ion-list>
+    </div>
+</ion-view>

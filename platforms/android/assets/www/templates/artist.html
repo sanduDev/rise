@@ -1,0 +1,191 @@
+<ion-view view-title="{{artist.surname}}">
+    <ion-nav-title class="bold first-letter-uc" on-tap="scrollTop()">
+        <span>{{artist.surname}}</span>
+    </ion-nav-title>
+    <ion-nav-buttons side="left">
+        <a class="button button-icon ion-ios-arrow-back" ng-click="goBack()"></a>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <div ng-controller="FavArtistsAddCtrl">
+            <a class="button button-icon ion-android-favorite-outline" ng-click="addFavoriteArtist(artist.user_id); isFavorite = true" ng-hide="isFavorite"></a>
+            <a class="button button-icon ion-android-favorite" ng-click="removeFavoriteArtist($index, artist.user_id); isFavorite = false" ng-show="isFavorite"></a>
+        </div>
+    </ion-nav-buttons>
+
+    
+    <div plangular="https://soundcloud.com/{{soundcloud_username}}/tracks">
+        <ion-content class="light-bg">
+            <!-- <ion-refresher on-refresh="doRefresh()"></ion-refresher> -->
+            <div class="artist-page">
+                <header class="profil" ng-init="rank = true">
+                    <!-- <i class="button button-icon ion-information-circled infos"></i> -->
+                     <!-- on-tap="rank=false" -->
+                    <section class="data a" ng-show="rank" ng-class="{active: rank}">
+                        <ion-slides options="options" slider="data.slider" class="text-center">
+                            <ion-slide-page class="rankSlide" ng-if="artist.neighborhood">
+                                <div class="verticaly-centered top-15">
+                                    <p class="rankNum" ng-bind-html="artist.rank_neighborhood | positionSuffix | trustAsHtml"></p>
+                                    <div class="rightChev"><i class="ion-chevron-right"></i></div>
+                                    <p>{{artist.neighborhood}}</p>
+                                </div>
+                            </ion-slide-page>
+                            <ion-slide-page class="rankSlide">
+                                <div class="verticaly-centered top-15">
+                                    <div class="leftChev" ng-if="artist.neighborhood"><i class="ion-chevron-left"></i></div>
+                                    <p class="rankNum" ng-bind-html="artist.rank_political | positionSuffix | trustAsHtml"></p>
+                                    <div class="rightChev"><i class="ion-chevron-right"></i></div>
+                                    <p>{{artist.political}}</p>
+                                </div>
+                            </ion-slide-page>
+                            <ion-slide-page class="rankSlide">
+                                <div class="verticaly-centered top-15">
+                                    <div class="leftChev"><i class="ion-chevron-left"></i></div>
+                                    <p class="rankNum" ng-bind-html="artist.rank_locality | positionSuffix | trustAsHtml"></p>
+                                    <p>{{artist.locality}}</p>
+                                </div>
+                            </ion-slide-page>
+                        </ion-slides>
+                    </section>
+                    <!-- <section class="data b" ng-hide="rank" on-tap="rank=true" ng-class="{active: !rank}">
+                        <section class="about padding">
+                            <ion-content style="bottom: 0;">
+                                <p>{{artist.biography}}</p>
+                            </ion-content>
+                        </section>
+                    </section> -->
+                    <section class="photo">
+                        <img ng-src="http://rise-discover.com/media/img/artists/{{artist.avatar_url}}" alt="{{artist.surname}}" ng-if="artist.avatar_url">
+                        <img src="img/rise-no-avatar.png" alt="{{artist.surname}}" ng-if="artist.avatar_url === '' || !artist.avatar_url">
+                    </section>
+                </header>
+
+                <tab-slide-box tab="0" set-class-when-at-top="fix-to-top">
+                    <div class="tsb-icons">
+                        <div class="tsb-ic-wrp">
+                            <ion-scroll has-bouncing="true" direction="x" class="tsb-hscroll position-absolute-left" scrollbar-x="false">
+                                <a class="active" on-finish-render="test()">Video</a>
+                                <a on-finish-render="test()">Tracks</a>
+                            </ion-scroll>
+                        </div>
+                        <div class="actions" ng-controller="UpVoteCtrl">
+                            <button id="upVoteBtn" ng-click="upVote(artist.user_id)" class="btn upvote ion-arrow-up-b" ng-class="{ 'upvoted': upvoted }"> {{artist.actual_points}}</button>
+                        </div>
+                    </div>
+                    <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)" has-bouncing="true" style = "height:200px !important">
+                        <ion-slide class="slide-height">
+                            <div class="full-height" delegate-handle="slide1Scroll">
+                              <div class="videoThumbnail" ng-click="openVideoURL()">
+                                <div class="cover">
+                                    <div class="verticaly-centered white text-align-center">Play video</div>
+                                </div>
+                                <img ng-src="{{thumbnail}}" ng-hide="showVideo || iframeIsLoaded" />
+                              </div>
+                            </div>
+                        </ion-slide>
+                        <ion-slide class="slide-height">
+
+                        <ion-scroll zooming="true" direction="y" style="height:100%">
+                         <div class="full-height" >
+                                <div ng-hide="hasTracks">
+                                  <div class="verticaly-centered top-15 text-align-center padding-top-25">
+                                    <p>No track available for this artist</p>
+                                    <i class="button button-icon ion-volume-mute font-size-40px"></i>
+                                  </div>
+                                </div>
+                                <div ng-if="hasTracks" ng-show="hasTracks" plangular="https://soundcloud.com/{{soundcloud_username}}/tracks">
+                                    <!--<div ng-if="currentTime > 0" class="padding music-player text-center">-->
+                                    <div ng-if="player.playing === track.src" class="padding music-player text-center">
+                                        <p>{{track.title}} - {{track.user.username}}</p>
+
+                                        <div class="progress-bar-music">
+                                            <samp class="h6 time">{{ currentTime | hhmmss }}</samp>
+                                            <progress class="progress" ng-click="seek($event)" ng-value="currentTime / duration || 0">
+                                                {{ currentTime / duration }}
+                                            </progress>
+                                            <samp class="h6">{{ duration | hhmmss }}</samp>
+                                        </div>
+                                        <div>
+                                            <button class="flex-none button button-narrow button-transparent button-grow rounded" title="Play Previous Track" ng-click="previous()">
+                                                <svg class="icon geomicon" data-icon="previous" viewBox="0 0 32 32" width="16" height="16" style="fill:currentcolor"><path d="M4 4 H8 V14 L28 4 V28 L8 18 V28 H4 z "></path></svg>
+                                            </button>
+                                            <button class="flex-none button button-transparent button-grow rounded" title="Play/Pause" ng-click="playPause($index)">
+                                                <svg ng-if="player.playing !== track.src" class="icon geomicon" data-icon="play" viewBox="0 0 32 32" width="16" height="16" style="fill:currentcolor"><path d="M4 4 L28 16 L4 28 z "></path></svg>
+                                                <svg ng-if="player.playing === track.src" class="icon geomicon" data-icon="pause" viewBox="0 0 32 32" width="16" height="16" style="fill:currentcolor"><path d="M4 4 H12 V28 H4 z M20 4 H28 V28 H20 z "></path></svg>
+                                            </button>
+                                            <button class="flex-none button mr2 button-narrow button-transparent button-grow rounded" title="Play Next Track" ng-click="next()">
+                                                <svg class="icon geomicon" data-icon="next" viewBox="0 0 32 32" width="16" height="16" style="fill:currentcolor"><path d="M4 4 L24 14 V4 H28 V28 H24 V18 L4 28 z "></path></svg>
+                                            </button>
+                                        </div>
+                                    </div><!--player-->
+
+                                    <ion-list class="lateral_borders" ng-show="hasTracks">
+                                        <ion-item class="track-item lateral_borders" ng-repeat="track in tracks track by $index" ng-class="{'is-active': player.playing === track.src}" scroll="true">
+                                            <div class="search item item-avatar" ng-click="playPause($index)">
+                                                <a ng-href="#/artists/{{artist.user_id}}">
+                                                    <div class="avatar col relative">
+                                                        <ion-spinner icon="spiral" ng-hide="ready"></ion-spinner>
+                                                        <img ng-src="{{track.artwork_url}}" alt="{{track.title}}" class="artwork" ng-show="track.artwork_url"/>
+                                                        <img src="/img/rise-60.png" alt="{{track.title}}" class="artwork" ng-show="!track.artwork_url"/>
+                                                    </div>
+                                                    <div class="data col col-70">
+                                                        <div class="infos" ng-class="{'is-active': player.playing === track.src}">
+                                                            <p class="username">{{artist.surname}}</p>
+                                                            <p class="title">{{track.title}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-center" style="position: absolute; bottom: 0; right: 13px;">
+                                                        <ion-spinner icon="spiral" ng-if="player.playing === track.src && currentTime === 0"></ion-spinner>
+                                                        <ion-spinner icon="lines" ng-if="player.playing === track.src && currentTime !== 0"></ion-spinner>
+                                                    </div>
+                                                </a>
+                                                <div ng-controller="FavTracksAddCtrl">
+                                                    <div class="addToPlayListPlus" ng-click="addFavoriteTrack(artist.user_id, artist.surname, track.permalink_url, track.src, track.title, track.artwork_url,track);$event.stopPropagation();">
+                                                        <i id="{{track.id}}" class="icon ion-ios-plus-outline font-size-30px lightgrey"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ion-item>
+                                    </ion-list>
+                                </div><!--plangular attr-->
+                            </div>
+                          
+                        </ion-scroll>
+                           
+                        </ion-slide>
+                    </ion-slide-box>
+                </tab-slide-box>
+            </div>
+        </ion-content>
+    </div>
+
+    <!--to show add tracksmore(track.id)-->
+    <div class="more tracks" ng-click="hello = false" ng-show="hello">
+        <ion-list ng-click="$event.stopPropagation(); childActive()">
+            <ion-item class="row" ng-click="addFavorite()">
+                <div class="col col-10 icon ion-heart text-center"></div>
+                <div class="col col-95">Favorites</div>
+            </ion-item>
+            <ion-item class="row" ng-click="showPlaylists()">
+                <div class="col col-10 icon ion-plus text-center"></div>
+                <div class="col col-95">Add to playlist</div>
+            </ion-item>
+            <ion-item class="row" onclick="alert('Repost on Soundcloud')">
+                <div class="col col-10 fa fa-soundcloud text-center" aria-hidden="true"></div>
+                <div class="col col-95">Repost on Soundcloud</div>
+            </ion-item>
+            <ion-item class="row" onclick="alert('Share this song')">
+                <div class="col col-10 icon ion-share text-center"></div>
+                <div class="col col-95">Share</div>
+            </ion-item>
+        </ion-list>
+    </div>
+
+    <!--to be used when playlists are available-->
+    <div ng-show="playlistsModal" class="padding modal full">
+        <i class="fa fa-close top-right" ng-click="hidePlaylists()"></i>
+        <p>Select a playlist</p>
+        <ion-list class="lateral_borders">
+            <ion-item ng-repeat="playlist in playlists" ng-click="addToPlaylist({{playlist.id}})">{{playlist.name}}, {{playlist.id}}</ion-item>
+        </ion-list>
+    </div>
+</ion-view>

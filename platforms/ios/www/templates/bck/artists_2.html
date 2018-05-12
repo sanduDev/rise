@@ -1,0 +1,164 @@
+<ion-view view-title="Rise Artists" nav-view-transition="swap">
+    <ion-nav-title class="bold">
+      <span>Top</span> <span class='red'>Rappers</span>
+    </ion-nav-title>
+    
+    <ion-content class="rise-homepage has-header" scroll="false">
+        <tab-slide-box tab="0">
+            <div class="tsb-icons">
+                <div class="tsb-ic-wrp">
+                    <ion-scroll has-bouncing="true" direction="x" class="tsb-hscroll" scrollbar-x="false">
+                        <a class="{{tab.icon}}" ng-repeat="tab in tabs track by $index" on-finish-render="test()">{{tab.text}}</a>
+                    </ion-scroll>
+                </div>
+            </div>
+            <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)">
+                <ion-slide>
+                    <ion-scroll class="full-height" delegate-handle="slide1Scroll">
+                        <ion-refresher on-refresh="doRefresh($index); updateMyPosition()"></ion-refresher>
+                        <div ng-show="artistslist[0]">
+                            <ion-item class="list" ng-repeat="artist in artistslist[0] track by $index">
+                                 <a class="item item-avatar" ng-href="#/artists/{{artist.user_id}}">
+                                     <img ng-src="{{artist.avatar_url}}" alt="{{artist.surname}}" ng-if="artist.avatar_url">
+                                     <img src="img/rise-no-avatar.png" alt="{{artist.surname}}" ng-if="artist.avatar_url === '' || !artist.avatar_url">
+                                     <h2>{{artist.surname}}</h2>
+                                     <p>{{artist.locality}}, {{artist.administrative_area_level_1}}</p>
+                                     <i class="rise ion-ios-arrow-right"></i>
+                                 </a>
+                            </ion-item>
+                            <ion-item class="list">
+                                <button ng-click="loadMore($index)" class="btn btn-warning">Show more</button>
+                            </ion-item>
+                            <ion-infinite-scroll icon="ion-loading-c" on-infinite="loadMore()" distance="1%" ng-if="noMoreItemsAvailable()"></ion-infinite-scroll>
+                        </div>
+                        <div class="row" ng-show="!artistslist[0] || artistslist[0].length === 0">
+                            <div class="col">
+                                <h3>There is no artist around you</h3>
+                                <p>Proposer du contenu alternatif s'il n'y a pas de rappeurs aux alentours.</p>
+                                <button onclick="alert('Updates position')" class="btn btn-danger">Update my position</button>
+                                <h4>Have you ever heard of [Artist] ?</h4>
+                                <p>Check this out</p>
+                            </div>
+                        </div>
+                    </ion-scroll>
+                </ion-slide>
+                <ion-slide>
+                    <ion-scroll class="full-height" delegate-handle="slide1Scroll">
+                        <ion-refresher on-refresh="doRefresh($index); updateMyPosition()"></ion-refresher>
+                        <div ng-show="artistslist[1]">
+                            <ion-item class="list" ng-repeat="artist in artistslist[1] track by $index">
+                                 <a class="item item-avatar" ng-href="#/artists/{{artist.user_id}}">
+                                     <img ng-src="{{artist.avatar_url}}" alt="{{artist.surname}}" ng-if="artist.avatar_url">
+                                     <img src="img/rise-no-avatar.png" alt="{{artist.surname}}" ng-if="artist.avatar_url === '' || !artist.avatar_url">
+                                     <h2>{{artist.surname}}</h2>
+                                     <p>{{artist.locality}}, {{artist.administrative_area_level_1}}</p>
+                                     <i class="rise ion-ios-arrow-right"></i>
+                                 </a>
+                            </ion-item>
+                            <ion-item class="list">
+                                <button ng-click="loadMore($index)" class="btn btn-warning">Show more</button>
+                            </ion-item>
+                            <ion-infinite-scroll icon="ion-loading-c" on-infinite="loadMore()" distance="1%" ng-if="noMoreItemsAvailable()"></ion-infinite-scroll>
+                        </div>
+                        <div class="row" ng-show="!artistslist[1] || artistslist[1].length === 0">
+                            <div class="col">
+                                <h3>There is no artist around you</h3>
+                                <p>Proposer du contenu alternatif s'il n'y a pas de rappeurs aux alentours.</p>
+                                <button onclick="alert('Updates position')" class="btn btn-danger">Update my position</button>
+                                <h4>Have you ever heard of [Artist] ?</h4>
+                                <p>Check this out</p>
+                            </div>
+                        </div>
+                    </ion-scroll>
+                </ion-slide>
+                <ion-slide>
+                    <ion-scroll class="full-height" delegate-handle="slide1Scroll">
+                        <ion-refresher on-refresh="doRefresh($index); updateMyPosition()"></ion-refresher>
+                        <div ng-show="artistslist[2]">
+                            <ion-item class="list" ng-repeat="artist in artistslist[2] track by $index">
+                                 <a class="item item-avatar" ng-href="#/artists/{{artist.user_id}}">
+                                     <img ng-src="{{artist.avatar_url}}" alt="{{artist.surname}}" ng-if="artist.avatar_url">
+                                     <img src="img/rise-no-avatar.png" alt="{{artist.surname}}" ng-if="artist.avatar_url === '' || !artist.avatar_url">
+                                     <h2>{{artist.surname}}</h2>
+                                     <p>{{artist.locality}}, {{artist.administrative_area_level_1}}</p>
+                                     <i class="rise ion-ios-arrow-right"></i>
+                                 </a>
+                            </ion-item>
+                            <ion-item class="list">
+                                <button ng-click="loadMore($index)" class="btn btn-warning">Show more</button>
+                            </ion-item>
+                            <ion-infinite-scroll icon="ion-loading-c" on-infinite="loadMore()" distance="1%" ng-if="noMoreItemsAvailable()"></ion-infinite-scroll>
+                        </div>
+                        <div class="row" ng-show="!artistslist[2] || artistslist[2].length === 0">
+                            <div class="col">
+                                <h3>There is no artist around you</h3>
+                                <p>Proposer du contenu alternatif s'il n'y a pas de rappeurs aux alentours.</p>
+                                <button onclick="alert('Updates position')" class="btn btn-danger">Update my position</button>
+                                <h4>Have you ever heard of [Artist] ?</h4>
+                                <p>Check this out</p>
+                            </div>
+                        </div>
+                    </ion-scroll>
+                </ion-slide>
+                <ion-slide>
+                    <ion-scroll class="full-height" delegate-handle="slide1Scroll">
+                        <ion-refresher on-refresh="doRefresh($index); updateMyPosition()"></ion-refresher>
+                        <div ng-show="artistslist[3]">
+                            <ion-item class="list" ng-repeat="artist in artistslist[3] track by $index">
+                                 <a class="item item-avatar" ng-href="#/artists/{{artist.user_id}}">
+                                     <img ng-src="{{artist.avatar_url}}" alt="{{artist.surname}}" ng-if="artist.avatar_url">
+                                     <img src="img/rise-no-avatar.png" alt="{{artist.surname}}" ng-if="artist.avatar_url === '' || !artist.avatar_url">
+                                     <h2>{{artist.surname}}</h2>
+                                     <p>{{artist.locality}}, {{artist.administrative_area_level_1}}</p>
+                                     <i class="rise ion-ios-arrow-right"></i>
+                                 </a>
+                            </ion-item>
+                            <ion-item class="list">
+                                <button ng-click="loadMore($index)" class="btn btn-warning">Show more</button>
+                            </ion-item>
+                            <ion-infinite-scroll icon="ion-loading-c" on-infinite="loadMore()" distance="1%" ng-if="noMoreItemsAvailable()"></ion-infinite-scroll>
+                        </div>
+                        <div class="row" ng-show="!artistslist[3] || artistslist[3].length === 0">
+                            <div class="col">
+                                <h3>There is no artist around you</h3>
+                                <p>Proposer du contenu alternatif s'il n'y a pas de rappeurs aux alentours.</p>
+                                <button onclick="alert('Updates position')" class="btn btn-danger">Update my position</button>
+                                <h4>Have you ever heard of [Artist] ?</h4>
+                                <p>Check this out</p>
+                            </div>
+                        </div>
+                    </ion-scroll>
+                </ion-slide>
+                <ion-slide>
+                    <ion-scroll class="full-height" delegate-handle="slide1Scroll">
+                        <ion-refresher on-refresh="doRefresh($index); updateMyPosition()"></ion-refresher>
+                        <div ng-show="artistslist[4]">
+                            <ion-item class="list" ng-repeat="artist in artistslist[4] track by $index">
+                                 <a class="item item-avatar" ng-href="#/artists/{{artist.user_id}}">
+                                     <img ng-src="{{artist.avatar_url}}" alt="{{artist.surname}}" ng-if="artist.avatar_url">
+                                     <img src="img/rise-no-avatar.png" alt="{{artist.surname}}" ng-if="artist.avatar_url === '' || !artist.avatar_url">
+                                     <h2>{{artist.surname}}</h2>
+                                     <p>{{artist.locality}}, {{artist.administrative_area_level_1}}</p>
+                                     <i class="rise ion-ios-arrow-right"></i>
+                                 </a>
+                            </ion-item>
+                            <ion-item class="list">
+                                <button ng-click="loadMore($index)" class="btn btn-warning">Show more</button>
+                            </ion-item>
+                            <ion-infinite-scroll icon="ion-loading-c" on-infinite="loadMore()" distance="1%" ng-if="noMoreItemsAvailable()"></ion-infinite-scroll>
+                        </div>
+                        <div class="row" ng-show="!artistslist[4] || artistslist[4].length === 0">
+                            <div class="col">
+                                <h3>There is no artist around you</h3>
+                                <p>Proposer du contenu alternatif s'il n'y a pas de rappeurs aux alentours.</p>
+                                <button onclick="alert('Updates position')" class="btn btn-danger">Update my position</button>
+                                <h4>Have you ever heard of [Artist] ?</h4>
+                                <p>Check this out</p>
+                            </div>
+                        </div>
+                    </ion-scroll>
+                </ion-slide>
+            </ion-slide-box>
+       </tab-slide-box>
+    </ion-content>
+</ion-view>

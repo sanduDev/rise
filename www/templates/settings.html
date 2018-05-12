@@ -1,0 +1,18 @@
+<ion-view view-title="Settings">
+    <ion-nav-title class="bold first-letter-uc">
+        <span>Settings</span>
+    </ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-icon ion-ios-arrow-back" ui-sref="user"></button>
+    </ion-nav-buttons>
+
+    <ion-content>
+        <ion-list class="paddinged lateral-borders">
+            <a ui-sref="help"><ion-item><i class="fa fa-file-text lightgrey" aria-hidden="true"></i> Help</ion-item></a>
+            <a ui-sref="about"><ion-item><i class="fa fa-question-circle lightgrey" aria-hidden="true"></i> About</ion-item></a>
+            <ion-item><i class="fa fa-bookmark lightgrey" aria-hidden="true"></i> Rate the App</ion-item>
+            <a ui-sref="termsofuse"><ion-item><i class="fa fa-info-circle lightgrey" aria-hidden="true"></i> Terms of use</ion-item></a>
+            <ion-item ng-click="showLogOutMenu()"><i class="fa fa-power-off lightgrey" aria-hidden="true"></i> Logout</ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

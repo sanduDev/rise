@@ -1,0 +1,37 @@
+<ion-view view-title="Settings">
+    <ion-nav-title class="bold first-letter-uc">
+        <span>Help</span>
+    </ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-icon ion-ios-arrow-back" ui-sref="settings"></button>
+    </ion-nav-buttons>
+
+<ion-content>
+
+      <ion-list class="help">
+        <div ng-repeat="group in groups track by $index">
+          <ion-item class="item-stable q"
+                ng-click="toggleGroup(group)"
+                ng-class="{active: isGroupShown(group)}">
+              <i class="icon" ng-class="isGroupShown(group) ? 'ion-chevron-down' : 'ion-chevron-right'"></i>
+            &nbsp;
+             {{group.question}}
+          </ion-item>
+          <ion-item class="item-accordion item-text-wrap" ng-show="isGroupShown(group)" ng-bind-html="group.answer">
+          </ion-item>
+        </div>
+      </ion-list>
+    
+      <div class="text-align-center padding-top-15 font-size-18px padding">
+        <div class="sep"></div>
+
+        <p>If you have any further question please feel free to contact us at</p>
+        
+        <!--<a href="mailto:contact@rise-discover.com">-->
+            <button ng-click="sendFeedback()" class="button button-stable font-size-20px padding">
+              contact@rise-discover.com
+            </button>
+        <!--</a>-->
+      </div>
+    </ion-content>
+</ion-view>

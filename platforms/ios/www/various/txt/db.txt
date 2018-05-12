@@ -1,0 +1,13 @@
+user table :
+id_user | surname | email | profil_picture | city | state | facebook_id | twitter_id | soundcloud_id | google_id
+
+tracks : 
+do we take all the tracks directly ?
+
+playlist : 
+id_playlist | user_id | playlist_name | playlist_description
+
+soundtrack added to playlist ! 
+id_soundtrack | playlist_id | soundtrack_url
+
+neighborhood > locality > sublocality_level_1 > administrative_area_level_2 > administrative_area_level_1 > country

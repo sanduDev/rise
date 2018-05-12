@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *">
+
+<title>Rise | Discover music as you go</title>
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="lib/ionic/css/ionic.css" rel="stylesheet">
+<link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="css/fonts/fonts.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link href="css/tabSlideBox.css" rel="stylesheet">
+
+<!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+<link href="css/ionic.app.css" rel="stylesheet">
+-->
+
+<script src="lib/ionic/js/ionic.bundle.js"></script>
+
+<script src="lib/ngCordova/dist/ng-cordova.js"></script>
+<script src="cordova.js"></script>
+
+<script src="js/app.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/services.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/directives.js"></script>
+<script src="js/functions.js"></script>
+<script src="lib/plangular/dist/plangular.js"></script>
+<script src="js/tabSlideBox.js"></script>
+
+</head>
+
+<body ng-app="rise" class="platform-ios platform-cordova platform-webview platform-android platform-cordova platform-webview">
+    <ion-side-menus enable-menu-with-back-views="false">
+
+        <ion-side-menu-content>
+            <ion-nav-bar class="bar-dark"></ion-nav-bar>
+            <ion-nav-view ui-view=""></ion-nav-view>
+        </ion-side-menu-content>
+
+        <ion-tabs class="tabs-dark darker tabs-icon-top" ng-class="{'tabs-item-hide': $root.hideTabs}">
+            <ion-tab ui-sref="artists" class="ranks icone"></ion-tab>
+            <ion-tab ui-sref="search" icon="ion-android-search"></ion-tab>
+            <ion-tab ui-sref="user" icon="ion-person"></ion-tab>
+        </ion-tabs>
+    </ion-side-menus>
+</body>
+</html>

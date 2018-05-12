@@ -1,0 +1,22 @@
+<ion-view view-title="Playlist" hide-tabs="false">
+    <ion-nav-title class="bold first-letter-uc">
+        <span>My Playlists</span>
+    </ion-nav-title>
+    
+    <ion-content class="rise-homepage">
+        <div class="list" ng-repeat="playlist in playlists track by $index">
+            <a class="item item-avatar" ng-href="#/playlists/{{playlist.id}}">
+                <img ng-src="" alt="">
+                
+                <h2>{{playlist.name}}</h2>
+                <i class="rise ion-ios-arrow-right"></i>
+            </a>
+        </div>
+        
+        <form ng-submit="addPlaylist(playlistName)">
+            <input type="text" ng-model="playlistName" placeholder="Playlist's name"/>
+            <button class="btn btn-success">Ajouter la playlist</button>
+        </form>
+        
+    </ion-content>
+</ion-view>

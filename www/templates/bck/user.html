@@ -1,0 +1,26 @@
+<ion-view view-title="{{user.username}}">
+    <ion-nav-title class="bold first-letter-uc">
+        <span>My account</span>
+    </ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button button-icon ion-ios-gear" ui-sref="settings"></button>
+    </ion-nav-buttons>
+    
+    <ion-content>
+        <div ng-repeat="hello in user">
+            <div class="profile-pic-front-container">
+                <div class="circle-cover">
+                    <img ng-src="{{hello.avatar}}" style="width: 100%;" alt="hopsin">
+                </div>
+                <div class="username">
+                    <p>{{hello.username}}</p>
+                    <p>{{hello.location.administrative_area_level_1}},{{hello.location.country}}</p>
+                </div>
+            </div>
+            <div class="profile-pic-back-container">
+                <div class="dark-cover"></div>
+                <img  ng-src="{{hello.avatar}}" style="width: 100%;" alt="hopsin">
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,281 @@
+<ion-view view-title="{{artist.surname}}">
+    <ion-nav-title class="bold first-letter-uc">
+        <span>{{artist.surname}}</span>
+        </ion-nav-title>
+        <ion-nav-buttons side="left">
+            <a class="button button-icon ion-ios-arrow-back" ng-href="#/artists"></a>
+        </ion-nav-buttons>
+    
+    <ion-content class="light-bg">
+        <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+        
+        <div class="artist-page">
+            <header class="profil" ng-init="rank = true">
+                <section class="data a" ng-show="rank" on-tap="rank=false" ng-class="{active: rank}">
+                    <section class="rank">
+                        <div ng-init="ranking" ng-repeat="(key, rank) in ranks track by $index">
+                            <span ng-show="ranking === {{key}}" ng-hide="ranking != {{key}}" ng-bind-html="rank | positionSuffix | trustAsHtml"></span>
+                        </div>
+                        <section ng-repeat="(key, location) in locations track by $index" class="location" on-swipe-left="toggleRank('left', ranking)" on-swipe-right="toggleRank('right', ranking)">
+                            <p ng-show="ranking === {{key}}" ng-hide="ranking != {{key}}">{{location}}</p>
+                        </section>
+                    </section>
+                </section>
+                <section class="data b" ng-hide="rank" on-tap="rank=true" ng-class="{active: !rank}">
+                    <section class="about padding">
+                        <ion-content>
+                            <p>{{artist.biography}}</p>
+                        </ion-content>
+                    </section>
+                </section>
+                <section class="photo">
+                    <img ng-src="{{artist.avatar_url}}" alt="{{artist.surname}}" ng-if="artist.avatar_url">
+                    <img src="img/rise-no-avatar.png" alt="{{artist.surname}}" ng-if="artist.avatar_url === '' || !artist.avatar_url">
+                </section>
+            </header>
+            
+            <tab-slide-box tab="0">
+                <div class="tsb-icons">
+                    <div class="tsb-ic-wrp">
+                        <ion-scroll has-bouncing="true" direction="x" class="tsb-hscroll" scrollbar-x="false">
+                            <a class="{{tab.icon}}" on-finish-render="test()">Video</a>
+                            <a class="{{tab.icon}}" on-finish-render="test()">Tracks</a>
+                        </ion-scroll>
+                    </div>
+                </div>
+                <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)">
+                    <ion-slide>
+                        <ion-scroll class="full-height" delegate-handle="slide1Scroll">
+                            <iframe width="560" height="315" ng-click="player.pause" ng-src="{{youtube_video | trustYoutubeVideoId}}" frameborder="0" allowfullscreen></iframe>
+                        </ion-scroll>
+                    </ion-slide>
+                    <ion-slide>
+                        <ion-scroll class="full-height" delegate-handle="slide1Scroll">
+                            <div ng-show="!hasTracks">No track available</div>
+                            <!--<div plangular="https://soundcloud.com/hopsin/tracks" ng-show="ready">-->  
+                            <div plangular="{{soundcloud_username}}" ng-show="hasTracks">
+                                <div ng-if="currentTime > 0">
+                                    <div>
+                                        <button class="flex-none button button-narrow button-transparent button-grow rounded" title="Play Previous Track" ng-click="previous()">
+                                            <svg class="icon geomicon" data-icon="previous" viewBox="0 0 32 32" width="16" height="16" style="fill:currentcolor"><path d="M4 4 H8 V14 L28 4 V28 L8 18 V28 H4 z "></path></svg>
+                                        </button>
+                                        <button class="flex-none button button-transparent button-grow rounded" title="Play/Pause" ng-click="playPause($index)">
+                                            <svg ng-if="player.playing !== track[0].src" class="icon geomicon" data-icon="play" viewBox="0 0 32 32" width="16" height="16" style="fill:currentcolor"><path d="M4 4 L28 16 L4 28 z "></path></svg>
+                                            <svg ng-if="player.playing === track[0].src" class="icon geomicon" data-icon="pause" viewBox="0 0 32 32" width="16" height="16" style="fill:currentcolor"><path d="M4 4 H12 V28 H4 z M20 4 H28 V28 H20 z "></path></svg>
+                                        </button>
+                                        <button class="flex-none button mr2 button-narrow button-transparent button-grow rounded" title="Play Next Track" ng-click="next()">
+                                            <svg class="icon geomicon" data-icon="next" viewBox="0 0 32 32" width="16" height="16" style="fill:currentcolor"><path d="M4 4 L24 14 V4 H28 V28 H24 V18 L4 28 z "></path></svg>
+                                        </button>
+                                    </div>
+                                    <div class="">
+                                        <progress class="progress" ng-click="seek($event)" ng-value="currentTime / duration || 0">
+                                            {{ currentTime / duration }}
+                                        </progress>
+                                        <samp class="h6">{{ currentTime | hhmmss }} / {{ duration | hhmmss }}</samp>
+                                        <p>{{track[0].title}} - <a href="/#/artists/{{artist.user_id}}">{{artist.surname}}</a></p>
+                                    </div>
+                                </div>
+                                <ion-list class="lateral_borders" ng-show="hasTracks">
+                                    <!--<ion-refresher on-refresh="doRefresh()"></ion-refresher>-->
+                                    <ion-item class="track-item lateral_borders" ng-class="{'is-active': player.playing === tracks[0].src }" scroll="true">
+                                        <div class="row" ng-click="playPause($index)">
+                                          <div class="col relative">
+                                              <ion-spinner icon="spiral" ng-hide="ready"></ion-spinner>
+                                              <img ng-src="{{tracks[0].artwork_url}}" alt="{{tracks[0].title}}" class="artwork" ng-show="ready"/>
+                                              <i class="icon" ng-class="[{'play-icon ion-play': player.playing === tracks[0].src } || {'play-icon ion-pause': currentTime > 0 }]"></i>
+                                              <i class="icon"></i>
+                                          </div>
+                                          <div class="col col-70">
+                                              <div>
+                                                  <p>{{artist.surname}}</p>
+                                                  <p>{{tracks[0].title}}</p>
+                                              </div>
+                                          </div>
+                                          <div class="col text-center" ng-click="tracksmore(tracks[0].id); $event.stopPropagation();">
+                                              <i class="icon ion-android-more-vertical more-dots"></i>
+                                          </div>
+                                      </div>
+                                    </ion-item>
+                                </ion-list>
+                            </div>
+                        </ion-scroll>
+                    </ion-slide>
+                </ion-slide-box>
+            </tab-slide-box>
+            
+            <div style="display: none">
+                <nav class="nav-artist dark-bg">
+                    <p ng-click="tab = 1" ng-class="{active:tab === 1}">Video</p>
+                    <p ng-click="tab = 2" ng-class="{active:tab === 2}">Tracks</p>
+                    <p ng-click="tab = 3" ng-class="{active:tab === 3}" class="button red support">Support</p>
+                </nav>
+
+                <section ng-init="tab = 2;" class="elements">
+                    <!-- Youtube tab -->
+                    <div class="panel" ng-show="tab === 1">
+                        <!--{{artist.youtube}}-->
+                        <iframe width="560" height="315" ng-click="player.pause" ng-src="{{youtube_video | trustYoutubeVideoId}}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <!-- Soundcloud tab -->
+                    <div class="panel" ng-show="tab === 2">
+                        <div ng-show="!hasTracks">No track available</div>
+                        <!--<div plangular="https://soundcloud.com/hopsin/tracks" ng-show="ready">-->  
+                        <div plangular="{{soundcloud_username}}" ng-show="hasTracks">
+                            <div ng-if="currentTime > 0">
+                                <div>
+                                    <button class="flex-none button button-narrow button-transparent button-grow rounded" title="Play Previous Track" ng-click="previous()">
+                                        <svg class="icon geomicon" data-icon="previous" viewBox="0 0 32 32" width="16" height="16" style="fill:currentcolor"><path d="M4 4 H8 V14 L28 4 V28 L8 18 V28 H4 z "></path></svg>
+                                    </button>
+                                    <button class="flex-none button button-transparent button-grow rounded" title="Play/Pause" ng-click="playPause($index)">
+                                        <svg ng-if="player.playing !== track[0].src" class="icon geomicon" data-icon="play" viewBox="0 0 32 32" width="16" height="16" style="fill:currentcolor"><path d="M4 4 L28 16 L4 28 z "></path></svg>
+                                        <svg ng-if="player.playing === track[0].src" class="icon geomicon" data-icon="pause" viewBox="0 0 32 32" width="16" height="16" style="fill:currentcolor"><path d="M4 4 H12 V28 H4 z M20 4 H28 V28 H20 z "></path></svg>
+                                    </button>
+                                    <button class="flex-none button mr2 button-narrow button-transparent button-grow rounded" title="Play Next Track" ng-click="next()">
+                                        <svg class="icon geomicon" data-icon="next" viewBox="0 0 32 32" width="16" height="16" style="fill:currentcolor"><path d="M4 4 L24 14 V4 H28 V28 H24 V18 L4 28 z "></path></svg>
+                                    </button>
+                                </div>
+                                <div class="">
+                                    <progress class="progress" ng-click="seek($event)" ng-value="currentTime / duration || 0">
+                                        {{ currentTime / duration }}
+                                    </progress>
+                                    <samp class="h6">{{ currentTime | hhmmss }} / {{ duration | hhmmss }}</samp>
+                                    <p>{{track[0].title}} - <a href="/#/artists/{{artist.user_id}}">{{artist.surname}}</a></p>
+                                </div>
+                            </div>
+                            <ion-list class="lateral_borders" ng-show="hasTracks">
+                                <!--<ion-refresher on-refresh="doRefresh()"></ion-refresher>-->
+                                <ion-item class="track-item lateral_borders" ng-class="{'is-active': player.playing === tracks[0].src }" scroll="true">
+                                    <div class="row" ng-click="playPause($index)">
+                                      <div class="col relative">
+                                          <ion-spinner icon="spiral" ng-hide="ready"></ion-spinner>
+                                          <img ng-src="{{tracks[0].artwork_url}}" alt="{{tracks[0].title}}" class="artwork" ng-show="ready"/>
+                                          <i class="icon" ng-class="[{'play-icon ion-play': player.playing === tracks[0].src } || {'play-icon ion-pause': currentTime > 0 }]"></i>
+                                          <i class="icon"></i>
+                                      </div>
+                                      <div class="col col-70">
+                                          <div>
+                                              <p>{{artist.surname}}</p>
+                                              <p>{{tracks[0].title}}</p>
+                                          </div>
+                                      </div>
+                                      <div class="col text-center" ng-click="tracksmore(tracks[0].id); $event.stopPropagation();">
+                                          <i class="icon ion-android-more-vertical more-dots"></i>
+                                      </div>
+                                  </div>
+                                </ion-item>
+    <!--                            <ion-item ng-repeat="track in tracks track by $index" class="track-item lateral_borders" ng-class="{'is-active': player.playing === track.src }" scroll="true">
+                                    <div class="row" ng-click="playPause($index)">
+                                      <div class="col relative">
+                                          <ion-spinner icon="spiral" ng-hide="ready"></ion-spinner>
+                                          <img ng-src="{{track.artwork_url}}" alt="{{track.title}}" class="artwork" ng-show="ready"/>
+                                          <i class="icon" ng-class="[{'play-icon ion-play': player.playing === track.src } || {'play-icon ion-pause': currentTime > 0 }]"></i>
+                                          <i class="icon"></i>
+                                      </div>
+                                      <div class="col col-70">
+                                          <div>
+                                              <p>{{artist.surname}}</p>
+                                              <p>{{track.title}}</p>
+                                          </div>
+                                      </div>
+                                      <div class="col text-center" ng-click="tracksmore(track.id); $event.stopPropagation();">
+                                          <i class="icon ion-android-more-vertical more-dots"></i>
+                                      </div>
+                                  </div>
+                                </ion-item>-->
+                            </ion-list>
+                        </div>
+                    </div>
+                     <!-- Social network tab --> 
+                    <div class="panel" ng-show="tab === 3">
+                        <div class="arrow-up-modal"></div>
+    <!--                    <div>
+                            <i class="icon-rise social-facebook-color"></i>
+                            <i class="icon-rise social-twitter-color"></i>
+                            <i class="icon-rise social-instagram-color"></i>
+                        </div>
+                        <div>
+                            <i class="icon-rise social-youtube-color"></i>
+                            <i class="icon-rise social-spotify-color"></i>
+                            <i class="icon-rise social-soundcloud-color"></i>
+                        </div>-->
+                        <div>
+                            <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                            <i class="fa fa-twitter-square" aria-hidden="true"></i>
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                            <i class="fa fa-vimeo-square" aria-hidden="true"></i>
+                            <i class="fa fa-soundcloud" aria-hidden="true"></i>
+                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            Follow this artist to RISE him in the rankings
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </ion-content>
+    
+    <div class="more tracks" ng-click="hello = false" ng-show="hello">
+        <ion-list ng-click="$event.stopPropagation(); childActive()">
+            <ion-item class="row" ng-click="addFavorite()">
+                <div class="col col-10 icon ion-heart text-center"></div>
+                <div class="col col-95">Favorites</div>
+            </ion-item>
+            <ion-item class="row" ng-click="showPlaylists()">
+                <div class="col col-10 icon ion-plus text-center"></div>
+                <div class="col col-95">Add to playlist</div>                
+            </ion-item>
+            <ion-item class="row" onclick="alert('Repost on Soundcloud')">
+                <div class="col col-10 fa fa-soundcloud text-center" aria-hidden="true"></div>
+                <div class="col col-95">Repost on Soundcloud</div>
+            </ion-item>
+            <ion-item class="row" onclick="alert('Share this song')">
+                <div class="col col-10 icon ion-share text-center"></div>
+                <div class="col col-95">Share</div>
+            </ion-item>
+        </ion-list>
+    </div>
+    
+    <div ng-show="playlistsModal" class="padding modal full">
+        <i class="fa fa-close top-right" ng-click="hidePlaylists()"></i>
+        <p>Select a playlist</p>
+        <ion-list class="lateral_borders">
+            <ion-item ng-repeat="playlist in playlists" ng-click="addToPlaylist({{playlist.id}})">{{playlist.name}}, {{playlist.id}}</ion-item>
+        </ion-list>
+    </div>
+</ion-view>
+<!--<button
+  class="flex flex-center full-width left-align button button-transparent"
+  title="Play {{track.title}}"
+  ng-class="{'is-active': player.playing === track.src }"
+  ng-click="playPause($index)">
+  <span class="flex-auto">
+    {{track.user.username}} - {{track.title}}
+  </span>
+  <span class="h6">
+    {{ track.duration / 1000 | hhmmss }}
+  </span>
+</button>-->
+<!--ng-class="{'active': player.playing === track.src}"
+<!--<ion-list>
+    <ion-item ng-repeat="track in tracks">
+        <div class="row" plangular="{{track['permalink_url'] | trustAsResourceUrl}}">
+            <div class="col relative">
+                <img ng-src="{{track.artwork_url}}" alt="{{track.title}}" class="artwork" ng-click="playPause()"/>
+                <i class="icon ion-arrow-right-b play-icon"></i>
+            </div>
+            <div class="col col-75">
+                <div>
+                    <p>{{track.title}}</p>
+                    <p><a href="/#/artists/{{artist.user_id}}">{{artist.surname}}</a></p>
+                    <div class="progress-bar" ng-show="0 < currentTime" ng-hide="currentTime == duration || !player.playing">
+                        <progress class="progress red" ng-value="currentTime / duration || 0" ng-click="seek($event)" value="{{ currentTime / duration || 0 }}">{{ currentTime / duration || 0 }}</progress>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <i class="icon ion-social-apple"></i>
+            </div>
+        </div>
+    </ion-item>
+</ion-list>-->

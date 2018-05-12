@@ -1,0 +1,57 @@
+<ion-view view-title="Rise Artists" nav-view-transition="swap">
+    <ion-nav-title class="bold">
+      <span>Top</span> <span class='red'>Rappers</span>
+    </ion-nav-title>
+    
+    <div>
+        <div class="bar bar-subheader dark-bg">
+            <!--<section class="location" on-swipe-left="toggleLocalization('left')" on-swipe-right="toggleLocalization('right')">-->
+            <section class="location">
+                <!--<p class="white bold text-center">{{place}}</p>-->
+                <ion-slide-box style="height:50px;" on-slide-changed="slideHasChanged($index)" active-slide="1">
+<!--                    <ion-slide>
+                        <p style="color: white; font-size: 15px; text-align: center;">
+                            {{place_before}}
+                        </p>
+                    </ion-slide>-->
+                    <ion-slide ng-repeat="place in locations track by $index">
+                        <p style="color: white; font-size: 15px; text-align: center;">
+                            {{position}}
+                        </p>
+                    </ion-slide>
+<!--                    <ion-slide>
+                        <p style="color: white; font-size: 15px; text-align: center;">
+                            {{place_after}}
+                        </p>
+                    </ion-slide>-->
+                </ion-slide-box>
+            </section>
+        </div>
+        
+        <ion-content class="rise-homepage has-subheader" scroll="true">
+            
+            <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+            
+            <div class="list" ng-repeat="artist in artists track by $index">
+                <a class="item item-avatar" ng-href="#/artists/{{artist.user_id}}">
+                    <img ng-src="{{artist.avatar_url}}" alt="{{artist.surname}}" ng-if="artist.avatar_url">
+                    <img src="/img/rise-no-avatar.png" alt="{{artist.surname}}" ng-if="artist.avatar_url === '' || !artist.avatar_url">
+                    <h2>{{artist.surname}}</h2>
+                    <!--<p>{{artist.locality}}, {{artist.administrative_area_level_1}}</p>-->
+                    <p>{{Location[$index][0]}}, {{Location[$index][1]}}</p>
+                    <i class="rise ion-ios-arrow-right"></i>
+                </a>
+            </div>
+            <!--<div ng-click="loadMore()" class="btn btn-warning">Show more</div>-->
+            <div class="row" ng-show="!artists || artists.length === 0">
+                <div class="col">
+                    <h3>There is no artist around you</h3>
+                    <p>Proposer du contenu alternatif s'il n'y a pas de rappeurs aux alentours.</p>
+                    <button onclick="alert('Updates position')" class="btn btn-danger">Update my position</button>
+                    <h4>Have you ever heard of [Artist] ?</h4>
+                    <p>Check this out</p>
+                </div>
+            </div>
+        </ion-content>
+    </div>
+</ion-view>

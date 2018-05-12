@@ -1,0 +1,46 @@
+{
+    "artists":[
+        {   
+            "id": 1,
+            "avatar": "https://i1.sndcdn.com/avatars-000119126010-8orfsw-t500x500.jpg",
+            "title": "Hopsin",
+            "url": "https://soundcloud.com/hopsin",
+            "location": {
+                "state": "Panorama City",
+                "city": "CA"
+            },
+            "rank": {
+                "state": "1",
+                "city": "2"
+            }
+        },
+        {
+            "id": 2,
+            "avatar": "https://i1.sndcdn.com/avatars-000039083273-2m69kq-t500x500.jpg",
+            "title": "Kendrick Lamar",
+            "url": "https://soundcloud.com/kendrick-lamar-official/",
+            "location": {
+                "state": "Compton",
+                "city": "USA"
+            },
+            "rank": {
+                "state": "1",
+                "city": "2"
+            }
+        },
+        {
+            "id": 3,
+            "avatar": "https://i1.sndcdn.com/avatars-000204117335-db9u3n-t500x500.jpg",
+            "title": "Rudimentaluk",
+            "url": "https://soundcloud.com/rudimentaluk",
+            "location": {
+                "state": "London",
+                "city": "GB"
+            },
+            "rank": {
+                "state": "1",
+                "city": "2"
+            }
+        }
+    ]
+}

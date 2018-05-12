@@ -1,0 +1,653 @@
+.item-avatar.tabs-dark.darker .tab-nav .tabs{
+    background: black;
+}
+.naked .item{
+    border: none;
+}
+.item{
+    border-bottom: solid 1px #a1a1a1;
+    color: black;
+}
+.item:last-child{
+    border-bottom: none;
+}
+.item .is-active.infos p.username{color: #1db954; font-weight: bold;}
+.item .is-active.infos p.title{color: #1db954;}
+.fa{
+    min-width: 20px;
+    text-align: center;
+}
+.lateral-borders .item{
+    border-bottom: none;
+    border-top: none;
+    border: solid 1px #ddd;
+}
+.paddinged .item{
+    padding: 15px;
+}
+.full-height{height: 100%;}
+.full-height.minus-fav{height: calc(100% - 125px)}
+.full-width{width: 100%;}
+.text-align-center{text-align: center!important;}
+.font-size-6px{font-size: 6px;}
+.font-size-8px{font-size: 8px;}
+.font-size-10px{font-size: 10px;}
+.font-size-12px{font-size: 12px;}
+.font-size-14px{font-size: 14px;}
+.font-size-16px{font-size: 16px;}
+.font-size-18px{font-size: 18px;}
+.font-size-20px{font-size: 20px;}
+.font-size-25px{font-size: 25px;}
+.font-size-30px{font-size: 30px;}
+.font-size-35px{font-size: 35px;}
+.font-size-40px{font-size: 40px;}
+.margin-center{margin: 0 auto;}
+.padding-top-5{padding-top: 5px;}
+.padding-top-7{padding-top: 7px;}
+.padding-top-10{padding-top: 10px;}
+.padding-top-15{padding-top: 15px;}
+.padding-top-20{padding-top: 20px;}
+.padding-top-25{padding-top: 25px;}
+.red{color: #d60e0e;}
+.white{color: #fff;}
+.grey{color: #555;}
+.lightgrey{color: #888;}
+.Red { 
+    color:#d60e0e !important;
+ }
+.relative{position: relative;}
+.spinner.white{stroke: #fff; fill: #fff;}
+.bold{font-family: 'Bebas Neue';font-weight: bold;}
+.first-letter-uc{text-transform: none;}
+.italic{font-style: italic;}
+.light-font{color: #fff;}
+.light-font{color: #fff;}
+.profile-pic {position: relative;width: 220px;}
+.bloc{height: 220px;}
+.z-low{z-index: -9999}
+.button.red{background: #d60e0e;}
+.position-relative{position: relative;}
+.honrizontaly-centered{left: 50%; position: absolute; transform: translateX(-50%);}
+.verticaly-centered{left: 50%; position: absolute; top: 50%; transform: translateX(-50%) translateY(-50%);}
+.verticaly-centered.top-15{left: 50%; position: absolute; bottom: -5%; transform: translateX(-50%) translateY(-50%);}
+.position-absolute-left{position:absolute;left:0;}
+.icone.tab-item{
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 25px auto;
+}
+.ranks.tab-item{background-image: url('../img/icones/ranks.png')}
+.ranks.tab-item-active{background-image: url('../img/icones/ranks-active.png')}
+.playlists.tab-item{background-image: url('../img/icones/playlists.png')}
+.playlists.tab-item-active{background-image: url('../img/icones/playlists-active.png')}
+.profile-pic-front-container{
+    height: 110px;
+    left: 50%;
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    width: 220px;
+    z-index: 3;
+}
+.profile-pic-front-container .circle-cover{
+    border: 2px solid white;
+    border-radius: 50%;
+    height: 110px;
+    left: 55px;
+    overflow: hidden;
+    position: absolute;
+    top: 15px;
+    width: 110px;
+    z-index: 2;
+}
+.profile-pic-front-container .username{
+    bottom: 25px;
+    color: white;
+    left: 50%;
+    line-height: 20px;
+    position: absolute;
+    text-align: center;
+    transform: translateX(-50%);
+    width: 100%;
+}
+.profile-pic-front-container .username p{
+    line-height: 20px;
+    margin: 0px;
+    text-shadow: 0px 0px 2px #444;
+}
+.wrap-profil{height: 133px; overflow: hidden; position: relative;}
+.profile-pic-back-container{
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+}
+.profile-pic-back-container .dark-cover{
+    background-color: rgba(0, 0, 0, 0.6);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+.profile-pic-back-container .dark-cover img{
+    width: 100%;
+}
+
+.rise-homepage div.list{
+    margin: 0;
+}
+.rise-homepage a.item{
+    border-bottom: 1px solid #999;
+    border-top: 1px solid #555;
+}
+.rise-homepage i.rise.ion-ios-arrow-right{
+    color: grey;
+    position: absolute;
+    right: 15px;
+    top: 27px;
+}
+.rise-homepage .item-avatar > img:first-child{
+    border-radius: 3px!important;
+}
+
+.artist-page header.profil{
+    min-height: 50%;
+    overflow: hidden;
+    position: relative;
+}
+.artist-page header.profil{
+    perspective: 1000;
+    transform-style: preserve-3d;
+}
+.artist-page header.profil .infos{position: absolute;right: 20px; top: 20px;}
+.b,
+.a{
+    perspective: 1000;
+    transform-style: preserve-3d;
+    opacity: 0;
+}
+.b.active,
+.a.active{
+    opacity: 1;
+    transition: 0.5s ease-in;
+}
+.artist-page header.profil section.data{
+    height: 300px;
+    max-height: 300px;
+    min-height: 300px;
+    overflow: hidden;
+}
+.artist-page header.profil section.photo{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+}
+.artist-page header.profil section.photo .no-avatar{
+    background-color: #090909;
+    color: white;
+    font-size: 50px;
+    height: 100%;
+    min-height: 500px;
+    position: relative;
+}
+.artist-page header.profil section.photo .no-avatar .le{
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    height: 50%;
+    left: 50%;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 50%;
+}
+.artist-page header.profil section.photo img{
+    width: 100%;
+}
+.artist-page header.profil section.data .rank{
+    bottom: 35px;
+    color: #fff;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 0 5px #000;
+    width: 100%;
+}
+.artist-page header.profil section.data .rank div{
+    width: 250px;
+    margin: 0 auto;
+    position: relative;
+}
+.rankSlide{font-size: 25px; color: #fdfdfd; text-shadow: 0px 0px 2px #000;}
+.rankSlide .leftChev{position: absolute;left: -25px;top: 0;}
+.rankSlide .rightChev{position: absolute;right: -25px;top: 0;}
+.rankNum{font-family: 'Bebas Neue'; font-size: 65px; padding-bottom: 25px;}
+.ordinal{
+    font-family: none;
+    font-size: 25px;
+    padding-left: 2px;
+    position: absolute;
+    top: -15px;
+}
+.artist-page header.profil section.data .rank span{
+    font-family: 'Bebas Neue';
+    font-size: 60px;
+}
+.artist-page header.profil section.data .location{
+    color: white;
+    font-size: 20px;
+}
+/*.artist-page header.profil section.data .location p:first-child::before,
+.artist-page header.profil section.data .location p:last-child::after{
+    content: "";
+}*/
+.artist-page header.profil section.data .location p::before{
+    font-family: "Ionicons";
+    content: "\f124";
+    font-size: 15px;
+    margin-right: 15px;
+}
+.artist-page header.profil section.data .location p::after{
+    font-family: "Ionicons";
+    content: "\f125";
+    font-size: 15px;
+    margin-left: 15px;
+}
+/*.artist-page header.profil section.data .location p.ng-show{
+    opacity: 1;
+    -webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -ms-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+}*/
+.artist-page header.profil section.data .about{
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+.artist-page header.profil section.data .about p{
+    display: table-cell;
+    padding: 0 50px;
+    text-align: justify;
+    vertical-align: middle;
+}
+.artist-page nav.nav-artist{
+    height: 50px;
+    padding-left: 15px;
+    padding-top: 15px;
+    position: relative;
+}
+.artist-page nav.nav-artist .support{
+    position: absolute;
+    right: 15px;
+    top: 12px;
+}
+.artist-page nav.nav-artist p{
+    color: white;
+    display: inline;
+    font-weight: 500;
+    margin: 0 6px;
+    padding: 0 4px;
+    text-transform: uppercase;
+}
+.artist-page nav.nav-artist p.active{
+    border-bottom: 2px solid #d60e0e;
+}
+.artist-page .elements{
+    background: #fff;
+    min-height: 50%;
+}
+.artist-page .elements .panel{
+    min-height: 50px;
+    padding: 0;
+    position: relative;
+}
+.artist-page .elements .panel iframe{
+    height: auto;
+    min-height: 200px;
+    margin-top: 15px;
+    width: 100%;
+}
+.arrow-up-modal{
+    background: #fff none repeat scroll 0 0;
+    height: 10px;
+    position: absolute;
+    right: 55px;
+    top: -5px;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width: 10px;
+}
+.ytp-title-text{
+    display: none;
+}
+.icon-rise{
+    background-size: 48px 48px;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    height: 48px;
+    line-height: 1;
+    margin-right: 10px;
+    text-rendering: auto;
+    text-transform: none;
+    width: 48px;
+}
+.icon-rise:last-child{
+    margin-right: 0;
+}
+#rise-player{
+    background: red;
+    bottom: 0;
+    display: none;
+    height: 50px;
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+}
+/*.track-item.is-active{
+    background: rgba(135, 0, 0, 0.6);
+}*/
+.play-icon{
+    background: black;
+    border-radius: 50%;
+    bottom: 25px;
+    color: white;
+    height: 20px;
+    left: 20px;
+    position: absolute;
+    width: 20px;
+    padding-left: 8px;
+}
+.artwork{
+    width: 50px;
+}
+.progress-bar{
+    /*position: absolute;*/
+    top: 40%;
+}
+.progress-bar progress.progress{
+    background-color: rgba(0, 0, 0, 0.063);
+    border: 0 none;
+    border-radius: 10000px;
+    cursor: pointer;
+    display: block;
+    height: 0.5625rem;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    width: 100%;
+}
+.progress-bar progress.progress::-moz-progress-bar,
+.progress-bar progress.progress::-webkit-progress-bar {
+    background-color: currentcolor;
+}
+.child-loader{
+    text-align: center;
+}
+.more-dots{
+    color: #666;
+    font-size: 25px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.more.tracks{
+    background-color: rgba(0, 0, 0, 0.5);
+    bottom: 48px;
+    padding-top: 105%;
+    position: absolute;
+    width: 100%;
+}
+.more.tracks .item{
+    background: #fff;
+    margin: 0;
+    border-top: solid 1px #dadada;
+    border-bottom: 0;
+    padding: 10px;
+}
+section.location p{
+    font-size: 20px;
+    padding-top: 7px;
+}
+.modal{
+    padding-top: 50px;
+    position: relative;
+}
+.fa.top-right{
+    position: absolute;
+    right: 5px;
+}
+form.search input[type=text]{
+    background: #555;
+    border-radius: 5px;
+    color: #999;
+    height: 28px;
+    margin: 3px auto!important;
+    padding: 2px 8px!important;
+    width: 99%;
+}
+form.search input[type=text]:focus{
+    color: white;
+}
+form.search a.clear{
+    background: none;
+    border: none;
+    color: white;
+    position: absolute;
+    right: 15px;
+    top: 13px;
+}
+form.search input[type=reset]:active{
+    color: #999;
+}
+.has-header.inside {
+    top: 22px;
+}
+.artists-slide,
+.artists-slide .child{
+    width:100%;
+}
+.artists-slide .child.list{
+    width: 100%;
+    position: absolute;
+    top: 44px;
+    left: 0;
+}
+.slider-slide{height: calc(100% - 49px)}
+.slide-height{
+    height: calc(100% - 20px) !important;
+}
+.item-avatar{
+    padding: 10px; position: relative;
+}
+.item-avatar .avatar,
+.item-avatar .data,
+.item-avatar .rank,
+.item-avatar .actions{
+    position: absolute;
+    top: 7px;
+}
+.item-avatar h2{padding-top: 0.5em;}
+.item-avatar .avatar{left: 50px;}
+.item-avatar .data{left: 115px; width:75%;}
+.item-avatar .data p.title{width: 90%;}
+.search.item-avatar .avatar{left: 10px;}
+.search.item-avatar .data{left: 75px; width:75%;}
+.item-avatar.fav .avatar{left: 10px;}
+.item-avatar.fav .data{left: 70px;}
+.list.item:first-child .item-avatar .rank{
+    color: #d60e0e;
+}
+.list.item:nth-child(2) .item-avatar .rank{
+    color: #660606;
+}
+.list.item:nth-child(3) .item-avatar .rank{
+    color: #666;
+}
+.item-left-editable .item-content,
+.item-right-editable .item-content{
+    padding: 0;
+}
+.button-icon .icon:before, .button-icon.icon:before{
+    font-size: 24px;
+}
+.item-avatar .rank{
+    color: #d0d0d0;
+    font-family: 'Bebas Neue';
+    font-size: 1.8em;
+    font-weight: bold;
+    left: 8px;
+    text-align: center;
+    top: 28px;
+    width: 35px;
+}
+.item-avatar .actions{
+    /*display: none;*/
+    right: 10px;
+    top: 1em;
+    z-index: 9999;
+}
+.item-avatar.fav .actions{
+    right: 20px;
+    top: 2em;
+    z-index: 9999;
+}
+.item-avatar .actions:hover{
+    /*background-color: red;*/
+}
+.item-avatar .avatar img{
+    border-radius: 5px;
+    max-width: 55px;
+    max-height: 55px;
+    width: 100%;
+    height: 100%;
+}
+.btn.upvote{
+    background-color: #e0e0e0;
+    height: 30px;
+    padding: 0 10px;
+}
+.btn.upvoted{ background-color: #d60e0e; color: white;}
+ion-scroll[direction=x] {
+  width: 100vw;
+}
+ion-scroll[direction=y] {
+  height: 100vh;
+}
+.tab-item .icon{font-size:25px;height:25px;}
+.fav .slider, .fav .tabbed-slidebox .tsb-icons{top: 0px;}
+.fix-to-top {position: fixed; top: 0;}
+
+.tabs-hide .tabs {
+    display: none;
+}
+div.social-wrap {width: 60%;}
+div.social-wrap button {
+    padding-right: 0px;
+    height: 35px;
+    background: none;
+    border: none;
+    display: block;
+    background-size: 35px 35px;
+    background-position: right center;
+    background-repeat: no-repeat;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+    margin-bottom: 15px;
+    width: 100%;
+    border-bottom: 2px solid transparent;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    box-shadow: 0 2px 2px -2px gray;
+    text-shadow: rgba(0, 0, 0, 0.7) 0px -1px 0;
+}
+button#facebook {
+    border-color: #2d5073;
+    background-color: #3b5998;
+    background-size: 11% auto;
+    background-position: left center;
+    width: 100%;
+}
+.login.home{background-color: black; background-image: url('../img/photo-1433024730544-5f8e3e2cc6c8.jpg'); background-size: 100% auto; background-position: top center; background-repeat: no-repeat; color: white;}
+.music-player{background-color: #dadada}
+.progress-bar-music{width: 100%;}
+.progress-bar-music .time{width: 10%;}
+.progress-bar-music .time,
+.progress-bar-music .progress{display: inline;}
+.progress-bar-music .progress{margin: 0; width: 70%;}
+.showDelete{height:25px; position: absolute; z-index: 999; right: 0; border: none; background: none;}
+.showDelete:active{background: none!important;}
+.showDelete.item.item-toggle.toggle-large div:first-child{color: #555; position: absolute; right: 65px; top: 2px;}
+.showDelete.item.item-toggle label{top: 3px;}
+.showDelete .item-toggle .toggle{top: 2px;}
+.showDelete .toggle .track{height:20px; width:40px;}
+.showDelete .toggle .handle{height:17px; top:6px!important; width:17px;}
+.swiper-slide-prev{opacity: 0}
+
+.inAppBrowserWrap {
+  background-color: rgba(0,0,0,0.75);
+  color: rgba(235,235,235,1.0);
+}
+.inAppBrowserWrap menu {
+  overflow: auto;
+  list-style-type: none;
+  padding-left: 0;
+}
+.inAppBrowserWrap a{ color: white;}
+.inAppBrowserWrap menu li {
+  display: none;
+  font-size: 25px;
+  height: 25px;
+  float: left;
+  margin: 0 10px;
+  padding: 3px 10px;
+  text-decoration: none;
+  color: #ccc;
+  display: block;
+  background: rgba(30,30,30,0.50);
+}
+.inAppBrowserWrap menu li.disabled {
+    color: #777;
+}
+.item:active{background: #E0E0E0;}
+.showMoreArtists {padding-top: 25px;}
+.showMoreArtists button{border-radius: 5px; background: #dadada; color: #555;}
+.addToPlayListPlus{top: 0px;position: absolute;right: 0px;padding: 10px 15px 20px 15px;z-index: 9999;}
+.videoThumbnail{position: relative;}
+.videoThumbnail .cover{background-color: rgba(0, 0, 0, 0.6); position: absolute; top: 25%; left: 50%; height: 100px; width: 100px; border-radius: 50%; transform: translateX(-50%);}
+.videoThumbnail img{border: 5px solid white;width: 100%;}
+tab-slide-box > div.tsb-icons > div.actions{position: absolute; right: 5px; top: 6px;}
+
+.help .item.item-stable {
+    background-color: white;
+    padding: 20px;
+}
+.help .item-stable{
+    border: none!important;
+}
+.help .q{
+    font-weight: bold;
+}
+.help .item.item-accordion {
+  padding: 10px;
+  transition: 0.09s all linear;
+}
+.item.item-accordion.ng-hide {
+  line-height: 0px;
+}
+.item.item-accordion.ng-hide-add,
+.item.item-accordion.ng-hide-remove {
+  display: block !important;
+}
+.small-sep{background:#000; height: 1px; margin: 25px 0; width: 50%;}
+.sep{background:#f0f0f0; height: 1px; margin-bottom: 25px;}

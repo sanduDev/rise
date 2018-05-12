@@ -1,0 +1,15 @@
+http://api.soundcloud.com/tracks?user_id=127274645&client_id=5fd371b0c0d2c54f6de733c69c25105b
+http://api.soundcloud.com/tracks?user_id=[user_id]&client_id=5fd371b0c0d2c54f6de733c69c25105b
+http://api.soundcloud.com/users/[username]?client_id=5fd371b0c0d2c54f6de733c69c25105b
+
+http://api.soundcloud.com/users/127274645/tracks.json?client_id=5fd371b0c0d2c54f6de733c69c25105b
+http://api.soundcloud.com/users/[username]/tracks.json?client_id=5fd371b0c0d2c54f6de733c69c25105b
+http://api.soundcloud.com/users/hopsin/tracks.json?client_id=5fd371b0c0d2c54f6de733c69c25105b
+
+https://api.soundcloud.com/users/127274645.json?client_id=5fd371b0c0d2c54f6de733c69c25105b
+https://api.soundcloud.com/resolve.json?url=https://soundcloud.com/hopsin&client_id=5fd371b0c0d2c54f6de733c69c25105b
+https://api.soundcloud.com/resolve.json?url=https://api.soundcloud.com/tracks/262859519/&client_id=5fd371b0c0d2c54f6de733c69c25105b
+
+
+
+http://api.soundcloud.com/resolve.json?url=' + $scope.audioLink + '&client_id=' + $rootScope.clientId

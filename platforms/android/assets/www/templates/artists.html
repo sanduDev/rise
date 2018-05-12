@@ -1,0 +1,353 @@
+<ion-view view-title="Rise Artists" cache="true">
+    <ion-nav-title class="bold" on-tap="scrollTop()">
+        <span>Top</span> <span class='red'>Rappers</span>
+    </ion-nav-title>
+
+    <ion-content class="rise-homepage has-header" scroll="false">
+        <div class="verticaly-centered text-align-center" ng-hide="tabs || allowRefresh || !searching" ng-show="searching">
+            <p class="text-align-center">Geolocation being processed</p>
+            <ion-spinner icon="spiral" class="spinner black"></ion-spinner>
+        </div>
+        <div class="verticaly-centered text-align-center" ng-if="allowRefresh" ng-hide="searching" ng-show="!searching" ng-click="updateMyPosition()">
+            <p class="font-size-9-px">Geolocation failed, check your connectivity</p>
+            <i class="icon ion-ios-navigate-outline font-size-40px"></i>
+            <p class="font-size-9-px">Press to refresh</p>
+        </div>
+        <tab-slide-box tab="0" ng-if="tabs">
+            <div class="tsb-icons">
+                <div class="padding-top-7 margin-center" ng-hide="tabs">
+                    <ion-spinner icon="dots" class="spinner white"></ion-spinner>
+                </div>
+                <div class="tsb-ic-wrp">
+                    <ion-scroll has-bouncing="true" direction="x" class="tsb-hscroll" scrollbar-x="false">
+                    <!--<div class="tsb-hscroll">-->
+                        <a class="artists {{tab.icon}}" ng-repeat="tab in tabs track by $index" on-finish-render="test()" ng-show="tabs">{{tab.text}}</a>
+                    </ion-scroll>
+                    <!--</div>-->
+                </div>
+            </div>
+            <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)" has-bouncing="true">
+                <ion-slide ng-if="tabs[0].text.length > 0">
+                    <ion-scroll class="full-height" delegate-handle="slide1Scroll">
+                        <ion-refresher on-refresh="doRefresh($index); updateMyPosition()"></ion-refresher>
+                        <div ng-if="artistslist0">
+                            <ion-list>
+                                <ion-item class="list" ng-repeat="artist in artistslist0 track by $index">
+                                     <div class="item item-avatar">
+                                        <a ng-href="#/artists/{{artist.user_id}}">
+                                            <div class="rank">{{$index + 1}}</div>
+                                            <div class="avatar">
+                                                <ion-spinner icon="spiral" class="verticaly-centered z-low"></ion-spinner>
+                                                <img ng-src="http://rise-discover.com/media/img/artists/{{artist.avatar_url}}" alt="{{artist.surname}}" ng-show="artist.avatar_url" img-preload class="fade">
+                                                <img src="img/rise-no-avatar.png" alt="{{artist.surname}}" ng-show="artist.avatar_url === '' || !artist.avatar_url">
+                                            </div>
+                                            <div class="data">
+                                                <h2>{{artist.surname | limitTo : 25}}<span ng-show="artist.surname.length > 25">[...]</span></h2>
+                                                <p><span ng-if="artist.neighborhood">{{artist.neighborhood + ', '}}</span>{{artist.political}}</p>
+                                            </div>
+                                        </a>
+                                     </div>
+                                </ion-item>
+                            </ion-list>
+                            <div class="showMoreArtists text-align-center" ng-hide="!artistslist0 || artistslist0.length === 0">
+                              <button ng-click="populateList0()" ng-if="hasMoreData0">Show more</button>
+
+                              <div ng-show="spin" ng-hide="!artistsListPending1">
+                                <ion-spinner icon="spiral" class="spinner black"></ion-spinner>
+                              </div>
+
+                              <span ng-if="!hasMoreData0">No more artist to load</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div ng-show="!tabs" class="text-align-center verticaly-centered">
+                                    <p>Loading data..</p>
+                                    <ion-spinner icon="dots"></ion-spinner>
+                                </div>
+                                <div ng-show="!artistslist0 || artistslist0.length === 0" ng-hide="!tabs">
+                                    <h3>There is no artist in this area</h3>
+                                    <p>Swipe to check artists in others areas</p>
+                                    <a ng-click="doRefresh($index); updateMyPosition()">Refresh my position</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-scroll>
+                </ion-slide>
+                <ion-slide ng-if="tabs[1].text.length > 0">
+                    <ion-scroll class="full-height" delegate-handle="slide1Scroll">
+                        <ion-refresher on-refresh="doRefresh($index); updateMyPosition()"></ion-refresher>
+                        <div ng-if="artistslist1">
+                            <ion-item class="list" ng-repeat="artist in artistslist1 track by $index">
+                                 <div class="item item-avatar">
+                                    <a ng-href="#/artists/{{artist.user_id}}">
+                                        <div class="rank">{{$index + 1}}</div>
+                                        <div class="avatar">
+                                            <ion-spinner icon="spiral" class="verticaly-centered z-low"></ion-spinner>
+                                                <img ng-src="http://rise-discover.com/media/img/artists/{{artist.avatar_url}}" alt="{{artist.surname}}" ng-show="artist.avatar_url" img-preload class="fade">
+                                            <img src="img/rise-no-avatar.png" alt="{{artist.surname}}" ng-show="artist.avatar_url === '' || !artist.avatar_url">
+                                        </div>
+                                        <div class="data">
+                                            <h2>{{artist.surname | limitTo : 25}}<span ng-show="artist.surname.length > 25">[...]</span></h2>
+                                            <p><span ng-if="artist.neighborhood">{{artist.neighborhood + ', '}}</span>{{artist.political}}</p>
+                                        </div>
+                                    </a>
+                                 </div>
+                            </ion-item>
+                            <div class="showMoreArtists text-align-center" ng-hide="!artistslist1 || artistslist1.length === 0">
+                              <button ng-click="populateList1()" ng-if="hasMoreData1" ng-hide="spin">Show more</button>
+
+                              <div ng-show="spin" ng-hide="!artistsListPending1">
+                                <ion-spinner icon="spiral" class="spinner black"></ion-spinner>
+                              </div>
+
+                              <span ng-if="!hasMoreData1">No more artist to load</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div ng-show="!tabs" class="text-align-center verticaly-centered">
+                                    <p>Loading data..</p>
+                                    <ion-spinner icon="dots"></ion-spinner>
+                                </div>
+                                <div ng-show="!artistslist1 || artistslist1.length === 0" ng-hide="!tabs">
+                                    <h3>There is no artist in this area</h3>
+                                    <p>Swipe to check artists in others areas</p>
+                                    <a ng-click="doRefresh($index); updateMyPosition()">Refresh my position</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-scroll>
+                </ion-slide>
+                <ion-slide ng-if="tabs[2].text.length > 0">
+                    <ion-scroll class="full-height" delegate-handle="slide1Scroll">
+                        <ion-refresher on-refresh="doRefresh($index); updateMyPosition()"></ion-refresher>
+                        <div ng-if="artistslist2">
+                            <ion-item class="list" ng-repeat="artist in artistslist2 track by $index">
+                                 <div class="item item-avatar">
+                                    <a ng-href="#/artists/{{artist.user_id}}">
+                                        <div class="rank">{{$index + 1}}</div>
+                                        <div class="avatar">
+                                            <ion-spinner icon="spiral" class="verticaly-centered z-low"></ion-spinner>
+                                                <img ng-src="http://rise-discover.com/media/img/artists/{{artist.avatar_url}}" alt="{{artist.surname}}" ng-show="artist.avatar_url" img-preload class="fade">
+                                            <img src="img/rise-no-avatar.png" alt="{{artist.surname}}" ng-show="artist.avatar_url === '' || !artist.avatar_url">
+                                        </div>
+                                        <div class="data">
+                                            <h2>{{artist.surname | limitTo : 25}}<span ng-show="artist.surname.length > 25">[...]</span></h2>
+                                            <p><span ng-if="artist.neighborhood">{{artist.neighborhood + ', '}}</span>{{artist.political}}</p>
+                                        </div>
+                                    </a>
+                                 </div>
+                            </ion-item>
+                            <div class="showMoreArtists text-align-center" ng-hide="!artistslist2 || artistslist2.length === 0">
+                              <button ng-click="populateList2()" ng-if="hasMoreData2" ng-hide="spin">Show more</button>
+
+                              <div ng-show="spin" ng-hide="!artistsListPending2">
+                                <ion-spinner icon="spiral" class="spinner black"></ion-spinner>
+                              </div>
+
+                              <span ng-if="!hasMoreData2">No more artist to load</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div ng-show="!tabs" class="text-align-center verticaly-centered">
+                                    <p>Loading data..</p>
+                                    <ion-spinner icon="dots"></ion-spinner>
+                                </div>
+                                <div ng-show="!artistslist2 || artistslist2.length === 0" ng-hide="!tabs">
+                                    <h3>There is no artist in this area</h3>
+                                    <p>Swipe to check artists in others areas</p>
+                                    <a ng-click="doRefresh($index); updateMyPosition()">Refresh my position</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-scroll>
+                </ion-slide>
+                <ion-slide ng-if="tabs[3].text.length > 0">
+                    <ion-scroll class="full-height" delegate-handle="slide1Scroll">
+                        <ion-refresher on-refresh="doRefresh($index); updateMyPosition()"></ion-refresher>
+                        <div ng-if="artistslist3">
+                            <ion-item class="list" ng-repeat="artist in artistslist3 track by $index">
+                                 <div class="item item-avatar">
+                                    <a ng-href="#/artists/{{artist.user_id}}">
+                                        <div class="rank">{{$index + 1}}</div>
+                                        <div class="avatar">
+                                            <ion-spinner icon="spiral" class="verticaly-centered z-low"></ion-spinner>
+                                            <img ng-src="http://rise-discover.com/media/img/artists/{{artist.avatar_url}}" alt="{{artist.surname}}" ng-show="artist.avatar_url" img-preload class="fade">
+                                            <img src="img/rise-no-avatar.png" alt="{{artist.surname}}" ng-show="artist.avatar_url === '' || !artist.avatar_url">
+                                        </div>
+                                        <div class="data">
+                                            <h2>{{artist.surname | limitTo : 25}}<span ng-show="artist.surname.length > 25">[...]</span></h2>
+                                            <p><span ng-if="artist.neighborhood">{{artist.neighborhood + ', '}}</span>{{artist.political}}</p>
+                                        </div>
+                                    </a>
+                                 </div>
+                            </ion-item>
+                            <div class="showMoreArtists text-align-center" ng-hide="!artistslist3 || artistslist3.length === 0">
+                              <button ng-click="populateList3()" ng-if="hasMoreData3" ng-hide="spin">Show more</button>
+
+                              <div ng-show="spin" ng-hide="!artistsListPending3">
+                                <ion-spinner icon="spiral" class="spinner black"></ion-spinner>
+                              </div>
+
+                              <span ng-if="!hasMoreData1">No more artist to load</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div ng-show="!tabs" class="text-align-center verticaly-centered">
+                                    <p>Loading data..</p>
+                                    <ion-spinner icon="dots"></ion-spinner>
+                                </div>
+                                <div ng-show="!artistslist3 || artistslist3.length === 0" ng-hide="!tabs">
+                                    <h3>There is no artist in this area</h3>
+                                    <p>Swipe to check artists in others areas</p>
+                                    <a ng-click="doRefresh($index); updateMyPosition()">Refresh my position</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-scroll>
+                </ion-slide>
+                <ion-slide ng-if="tabs[4].text.length > 0">
+                    <ion-scroll class="full-height" delegate-handle="slide1Scroll">
+                        <ion-refresher on-refresh="doRefresh($index); updateMyPosition()"></ion-refresher>
+                        <div ng-if="artistslist4">
+                            <ion-item class="list" ng-repeat="artist in artistslist4 track by $index">
+                                 <div class="item item-avatar">
+                                    <a ng-href="#/artists/{{artist.user_id}}">
+                                        <div class="rank">{{$index + 1}}</div>
+                                        <div class="avatar">
+                                            <ion-spinner icon="spiral" class="verticaly-centered z-low"></ion-spinner>
+                                            <img ng-src="http://rise-discover.com/media/img/artists/{{artist.avatar_url}}" alt="{{artist.surname}}" ng-show="artist.avatar_url" img-preload class="fade">
+                                            <img src="img/rise-no-avatar.png" alt="{{artist.surname}}" ng-show="artist.avatar_url === '' || !artist.avatar_url">
+                                        </div>
+                                        <div class="data">
+                                            <h2>{{artist.surname | limitTo : 25}}<span ng-show="artist.surname.length > 25">[...]</span></h2>
+                                            <p><span ng-if="artist.neighborhood">{{artist.neighborhood + ', '}}</span>{{artist.political}}</p>
+                                        </div>
+                                    </a>
+                                 </div>
+                            </ion-item>
+                            <div class="showMoreArtists text-align-center" ng-hide="!artistslist4 || artistslist4.length === 0">
+                              <button ng-click="populateList4()" ng-if="hasMoreData4" ng-hide="spin">Show more</button>
+
+                              <div ng-show="spin" ng-hide="!artistsListPending4">
+                                <ion-spinner icon="spiral" class="spinner black"></ion-spinner>
+                              </div>
+
+                              <span ng-if="!hasMoreData4">No more artist to load</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div ng-show="!tabs" class="text-align-center verticaly-centered">
+                                    <p>Loading data..</p>
+                                    <ion-spinner icon="dots"></ion-spinner>
+                                </div>
+                                <div ng-show="!artistslist4 || artistslist4.length === 0" ng-hide="!tabs">
+                                    <h3>There is no artist in this area</h3>
+                                    <p>Swipe to check artists in others areas</p>
+                                    <a ng-click="doRefresh($index); updateMyPosition()">Refresh my position</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-scroll>
+                </ion-slide>
+                <ion-slide ng-if="tabs[5].text.length > 0">
+                    <ion-scroll class="full-height" delegate-handle="slide1Scroll">
+                        <ion-refresher on-refresh="doRefresh($index); updateMyPosition()"></ion-refresher>
+                        <div ng-if="artistslist5">
+                            <ion-item class="list" ng-repeat="artist in artistslist5 track by $index">
+                                 <div class="item item-avatar">
+                                    <a ng-href="#/artists/{{artist.user_id}}">
+                                        <div class="rank">{{$index + 1}}</div>
+                                        <div class="avatar">
+                                            <ion-spinner icon="spiral" class="verticaly-centered z-low"></ion-spinner>
+                                            <img ng-src="http://rise-discover.com/media/img/artists/{{artist.avatar_url}}" alt="{{artist.surname}}" ng-show="artist.avatar_url" img-preload class="fade">
+                                            <img src="img/rise-no-avatar.png" alt="{{artist.surname}}" ng-show="artist.avatar_url === '' || !artist.avatar_url">
+                                        </div>
+                                        <div class="data">
+                                            <h2>{{artist.surname | limitTo : 25}}<span ng-show="artist.surname.length > 25">[...]</span></h2>
+                                            <p><span ng-if="artist.neighborhood">{{artist.neighborhood + ', '}}</span>{{artist.political}}</p>
+                                        </div>
+                                    </a>
+                                 </div>
+                            </ion-item>
+                            <div class="showMoreArtists text-align-center" ng-hide="!artistslist5 || artistslist5.length === 0">
+                              <button ng-click="populateList5()" ng-if="hasMoreData5" ng-hide="spin">Show more</button>
+
+                              <div ng-show="spin" ng-hide="!artistsListPending5">
+                                <ion-spinner icon="spiral" class="spinner black"></ion-spinner>
+                              </div>
+
+                              <span ng-if="!hasMoreData5">No more artist to load</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div ng-show="!tabs" class="text-align-center verticaly-centered">
+                                    <p>Loading data..</p>
+                                    <ion-spinner icon="dots"></ion-spinner>
+                                </div>
+                                <div ng-show="!artistslist5 || artistslist5.length === 0" ng-hide="!tabs">
+                                    <h3>There is no artist in this area</h3>
+                                    <p>Swipe to check artists in others areas</p>
+                                    <a ng-click="doRefresh($index); updateMyPosition()">Refresh my position</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-scroll>
+                </ion-slide>
+                <ion-slide ng-if="tabs[6].text.length > 0">
+                    <ion-scroll class="full-height" delegate-handle="slide1Scroll">
+                        <ion-refresher on-refresh="doRefresh($index); updateMyPosition()"></ion-refresher>
+                        <div ng-if="artistslist6">
+                            <ion-item class="list" ng-repeat="artist in artistslist6 track by $index">
+                                 <div class="item item-avatar">
+                                    <a ng-href="#/artists/{{artist.user_id}}">
+                                        <div class="rank">{{$index + 1}}</div>
+                                        <div class="avatar">
+                                            <ion-spinner icon="spiral" class="verticaly-centered z-low"></ion-spinner>
+                                            <img ng-src="{{artist.avatar_url}}" alt="{{artist.surname}}" ng-show="artist.avatar_url" img-preload class="fade">
+                                            <img src="img/rise-no-avatar.png" alt="{{artist.surname}}" ng-show="artist.avatar_url === '' || !artist.avatar_url">
+                                        </div>
+                                        <div class="data">
+                                            <h2>{{artist.surname | limitTo : 25}}<span ng-show="artist.surname.length > 25">[...]</span></h2>
+                                            <p><span ng-if="artist.neighborhood">{{artist.neighborhood + ', '}}</span>{{artist.political}}</p>
+                                        </div>
+                                    </a>
+                                 </div>
+                            </ion-item>
+                            <div class="showMoreArtists text-align-center" ng-hide="!artistslist6 || artistslist6.length === 0">
+                              <button ng-click="populateList6()" ng-if="hasMoreData6" ng-hide="spin">Show more</button>
+
+                              <div ng-show="spin" ng-hide="!artistsListPending6">
+                                <ion-spinner icon="spiral" class="spinner black"></ion-spinner>
+                              </div>
+
+                              <span ng-if="!hasMoreData6">No more artist to load</span>
+                              {{artistsListPending6}}
+                              <br>
+                              {{hasMoreData6}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div ng-show="!tabs" class="text-align-center verticaly-centered">
+                                    <p>Loading data..</p>
+                                    <ion-spinner icon="dots"></ion-spinner>
+                                </div>
+                                <div ng-show="!artistslist6 || artistslist6.length === 0" ng-hide="!tabs">
+                                    <h3>There is no artist in this area</h3>
+                                    <p>Swipe to check artists in others areas</p>
+                                    <a ng-click="doRefresh($index); updateMyPosition()">Refresh my position</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-scroll>
+                </ion-slide>
+            </ion-slide-box>
+       </tab-slide-box>
+    </ion-content>
+</ion-view>
